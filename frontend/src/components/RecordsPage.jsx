@@ -12,6 +12,9 @@ function RecordsModal({ onClose }) {
         const response = await fetch("http://localhost:5000/api/records");
         if (!response.ok) throw new Error("Failed to fetch records");
         const data = await response.json();
+              data.sort((a, b) => new Date(a.date_checking) - new Date(b.date_checking));
+
+        
         setRecords(data);
       } catch (err) {
         setError(err.message);

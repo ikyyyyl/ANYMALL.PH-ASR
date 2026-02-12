@@ -19,7 +19,7 @@ exports.getRecords = async (req, res) => {
 
 // Export to Excel
 exports.exportRecords = async (req, res) => {
-  const records = await Record.find();
+  const records = await Record.find(). sort({ date_checking: 1 });
   const workbook = await exportToExcel(records);
 
   res.setHeader(

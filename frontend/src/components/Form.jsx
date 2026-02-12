@@ -5,7 +5,7 @@ function Form({ onClose, brand }) {
   const [formData, setFormData] = useState({
     brand: brand || "",
     order_date: "",
-    under_warranty: "No",
+    under_warranty: "Yes",
     date_checking: "",
     order_number: "",
     product_name: "",
@@ -38,7 +38,26 @@ function Form({ onClose, brand }) {
       const payload = formData;
       await API.post("/records", payload);
       alert("Data saved successfully!");
-      onClose();
+      // onClose();
+      setFormData({
+      brand: brand || "",
+      order_date: "",
+      under_warranty: "Yes",
+      date_checking: "",
+      order_number: "",
+      product_name: "",
+      color: "",
+      quantity: 0,
+      status: "Repaired",
+      problem_desc: "",
+      maintenance_desc: "",
+      current_status: "Done Repair",
+      unit_serial_number: "",
+      note: "",
+      technician: "",
+      accessory_cost: 0,
+    });
+
     } catch (error) {
       console.error("FULL ERROR:", error.response?.data || error.message);
       alert("Error saving data.");
@@ -102,7 +121,7 @@ function Form({ onClose, brand }) {
             </div>
          
               <div className="form-group">
-              <label>Under Warranty?</label>
+              <label>Within the warranty period?</label>
               <select name="under_warranty" value={formData.under_warranty} onChange={handleChange} >
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -168,6 +187,7 @@ function Form({ onClose, brand }) {
               <label>Status</label>
               <select name="status" value={formData.status} onChange={handleChange} >
                 <option value="Repaired">Repaired</option>
+                <option value="Pending">Pending</option>
                 <option value="Out of Warranty">Out of Warranty</option>
                 <option value="Voided Warranty">Voided Warranty</option>
                 <option value="Defective">Defective</option>

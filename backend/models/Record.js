@@ -15,7 +15,7 @@ const recordSchema = new mongoose.Schema({
   order_number: { 
     type: String, 
     required: true,
-    unique: true },
+  },
   product_name: { 
     type: String, 
     required: true 
@@ -26,7 +26,7 @@ const recordSchema = new mongoose.Schema({
     default: 1 },
   status: {
     type: String,
-    enum: ["Repaired", "Out of Warranty", "Voided Warranty", "Defective"],
+    enum: ["Repaired", "Pending", "Out of Warranty", "Voided Warranty", "Defective"],
     },
   problem_desc: String,
   maintenance_desc: String,
