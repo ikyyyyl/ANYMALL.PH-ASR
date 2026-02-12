@@ -1,9 +1,9 @@
 import { useState } from "react";
 import API from "../services/api";
 
-function Form({ onClose}) {
+function Form({ onClose, brand }) {
   const [formData, setFormData] = useState({
-    brand: "",
+    brand: brand || "",
     order_date: "",
     under_warranty: "No",
     date_checking: "",
@@ -11,10 +11,10 @@ function Form({ onClose}) {
     product_name: "",
     color: "",
     quantity: 0,
-    status: "",
+    status: "Repaired",
     problem_desc: "",
     maintenance_desc: "",
-    current_status: "",
+    current_status: "Done Repair",
     unit_serial_number: "",
     note: "",
     technician: "",
@@ -78,15 +78,15 @@ function Form({ onClose}) {
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-grid">
 
-            <div className="form-group">
+            <div className="form-group brand-group">
               <label>Brand</label>
               <input
                 type="text"
                 name="brand"
-                placeholder="Input Brand"
                 value={formData.brand}
                 onChange={handleChange}
-                required
+                readOnly
+                disabled
               />
             </div>
 

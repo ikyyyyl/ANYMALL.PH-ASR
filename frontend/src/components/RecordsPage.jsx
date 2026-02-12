@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import API from "../services/api";
 
 function RecordsModal({ onClose }) {
   const [records, setRecords] = useState([]);
@@ -21,6 +22,25 @@ function RecordsModal({ onClose }) {
 
     fetchRecords();
   }, []);
+
+  const handleExport = async () => {
+  try {
+    const response = await API.get("/records/export", {
+      responseType: "blob", // IMPORTANT for Excel download
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "After_Sales-Record.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (error) {
+    console.error("Export failed:", error);
+    alert("Failed to export records");
+  }
+};
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -57,7 +77,17 @@ function RecordsModal({ onClose }) {
                 </tr>
               ))}
             </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan="6">
+                  <button type="button" className="btn-export" onClick={handleExport}>
+                    <span className="btn-text">⤓ Export</span>
+                  </button>
+                </td>
+              </tr>
+            </tfoot>
           </table>
+          
         )}
       </div>
     </div>

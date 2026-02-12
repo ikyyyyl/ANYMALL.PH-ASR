@@ -367,6 +367,16 @@ button:hover {
   flex-direction: column;
 }
 
+.form-group.brand-group input{
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+  background-color: #18342f;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px #000000;
+}
+
+
 .form-group label {
   margin-bottom: 5px;
   color: #000000;
@@ -424,6 +434,7 @@ button:hover {
 }
 
 .btn-save:hover {
+  background: #959595;
   transform: translateY(-2px);
   box-shadow: 0 12px 26px rgba(14,165,183,0.5);
 }
@@ -436,19 +447,23 @@ button:hover {
 }
 
 .btn-export:hover {
+  background: #959595;
   transform: translateY(-2px);
   box-shadow: 0 12px 26px rgba(20,184,166,0.5);
 }
 
 /* CANCEL BUTTON */
 .btn-cancel {
-  background: #4b5563;
-  color: white;
+  background: #9d3030;
+  font-weight: 700;
+  color: rgb(0, 0, 0);
   box-shadow: 0 6px 16px rgba(0,0,0,0.3);
 }
 
 .btn-cancel:hover {
-  background: #374151;
+  background: #959595;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(20,184,166,0.5);
 }
 
 
@@ -486,6 +501,9 @@ button:hover {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  overflow-y: auto;
+  max-height: 60vh;
+  margin-top: 20px;
 }
 
 .records-table th,
@@ -497,4 +515,8 @@ button:hover {
 
 .records-table th {
   background-color: #2f2f2f;
+    color: #fff;
+  position: sticky;    /* Sticky header */
+  top: 0;              /* Stick to top */
+  z-index: 1;
 }
