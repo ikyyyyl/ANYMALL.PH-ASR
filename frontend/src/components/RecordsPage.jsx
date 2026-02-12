@@ -25,9 +25,9 @@ function RecordsModal({ onClose }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="modal-close">
+        {/* <button onClick={onClose} className="modal-close">
           ✖
-        </button>
+        </button> */}
         <h2>All Records</h2>
 
         {loading && <p>Loading records...</p>}
@@ -37,21 +37,23 @@ function RecordsModal({ onClose }) {
           <table className="records-table">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>Order Number</th>
                 <th>Brand</th>
-                <th>Product</th>
-                <th>Status</th>
-                <th>Date</th>
+                <th>Product Name</th>
+                <th>Current Status</th>
+                <th>Unit Serial Number</th>
+                <th>Date of Checking</th>
               </tr>
             </thead>
             <tbody>
               {records.map((record) => (
                 <tr key={record._id}>
-                  <td>{record._id}</td>
+                  <td>{record.order_number}</td>
                   <td>{record.brand}</td>
-                  <td>{record.product}</td>
-                  <td>{record.status}</td>
-                  <td>{new Date(record.date).toLocaleDateString()}</td>
+                  <td>{record.product_name}</td>
+                  <td>{record.current_status}</td>
+                  <td>{record.unit_serial_number}</td>
+                  <td>{new Date(record.date_checking).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>
