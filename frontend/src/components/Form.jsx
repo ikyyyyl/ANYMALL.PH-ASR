@@ -91,7 +91,7 @@ function Form({ onClose, brand }) {
 
         {/* Header */}
         <div className="modal-header">
-          <h2>After Sales Record<br /><h5>Fill in the service details below</h5></h2>
+          <h2>After Sales Record</h2>
           <button className="modal-close" onClick={onClose}>✖</button>
         </div>
 
