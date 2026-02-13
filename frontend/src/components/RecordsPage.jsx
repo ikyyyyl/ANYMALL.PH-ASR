@@ -9,7 +9,7 @@ function RecordsModal({ onClose }) {
   useEffect(() => {
     const fetchRecords = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/records");
+        const response = await fetch("https://anymall-ph-asr-backend.onrender.com/api/records");
         if (!response.ok) throw new Error("Failed to fetch records");
         const data = await response.json();
               data.sort((a, b) => new Date(a.date_checking) - new Date(b.date_checking));
