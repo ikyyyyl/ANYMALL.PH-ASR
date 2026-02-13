@@ -67,6 +67,7 @@ function Form({ onClose, brand }) {
   const handleExport = async () => {
   try {
     const response = await API.get("/records/export", {
+      params: { brand: brand },
       responseType: "blob", // IMPORTANT for Excel download
     });
 
@@ -79,7 +80,7 @@ function Form({ onClose, brand }) {
     link.remove();
   } catch (error) {
     console.error("Export failed:", error);
-    alert("Failed to export records");
+    alert("Failed to export records. There are no data in the database to export.");
   }
 };
 
@@ -90,7 +91,7 @@ function Form({ onClose, brand }) {
 
         {/* Header */}
         <div className="modal-header">
-          <h2>After Sales Record</h2>
+          <h2>After Sales Record<br /><h5>Fill in the service details below</h5></h2>
           <button className="modal-close" onClick={onClose}>✖</button>
         </div>
 

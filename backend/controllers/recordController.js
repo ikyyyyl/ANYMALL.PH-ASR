@@ -19,15 +19,42 @@ exports.getRecords = async (req, res) => {
 
 // Export to Excel
 exports.exportRecords = async (req, res) => {
-  const records = await Record.find(). sort({ date_checking: 1 });
-  const workbook = await exportToExcel(records);
+  try {
+    const { brand } = req.query;
 
-  res.setHeader(
-    "Content-Type",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-  );
-  res.setHeader("Content-Disposition", "attachment; filename=After_Sales-Record.xlsx");
+    let filter = {};
 
-  await workbook.xlsx.write(res);
-  res.end();
+    // ✅ Apply brand filter only if provided
+    if (brand && brand.trim() !== "") {
+      filter.brand = brand.trim();
+    }
+
+    const records = await Record.find(filter).sort({ date_checking: 1 });
+
+    if (!records.length) {
+      return res.status(404).json({ message: "No records found to export." });
+    }
+
+    const workbook = await exportToExcel(records);
+
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=After_Sales-Record.xlsx"
+    );
+
+    await workbook.xlsx.write(res);
+    res.end();
+
+  } catch (error) {
+    console.error("Export error:", error);
+    res.status(500).json({
+      message: "Failed to export records",
+      error: error.message,
+    });
+  }
 };
