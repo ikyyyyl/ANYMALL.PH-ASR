@@ -53,7 +53,7 @@ function LandingPage() {
       </div>
       <br />
       <button className="view-btn" onClick={handleViewRecords}>
-        VIEW ALL RECORDS
+        VIEW ALL SERVICE RECORDS
       </button>
 
       {showForm && <Form onClose={() => setShowForm(false)} brand={selectedBrand} />}

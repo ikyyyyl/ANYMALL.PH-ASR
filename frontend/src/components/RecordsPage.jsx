@@ -51,7 +51,7 @@ function RecordsModal({ onClose }) {
         {/* <button onClick={onClose} className="modal-close">
           ✖
         </button> */}
-        <h2>All Records</h2>
+        <h2>All Service Records</h2>
 
         {loading && <p>Loading records...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
