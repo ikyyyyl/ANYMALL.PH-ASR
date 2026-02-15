@@ -1,6 +1,6 @@
 function ExportButton() {
   const handleExport = () => {
-    window.open("http://anymall-ph-asr-backend.onrender.com/api/records/export");
+    window.open("http://localhost:5000/api/records/export");
   };
 
   return <button onClick={handleExport}>Export to Excel</button>;

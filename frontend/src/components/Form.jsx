@@ -10,7 +10,7 @@ function Form({ onClose, brand }) {
     order_number: "",
     product_name: "",
     color: "",
-    quantity: 0,
+    quantity: "",
     status: "Repaired",
     problem_desc: "",
     maintenance_desc: "",
@@ -18,7 +18,7 @@ function Form({ onClose, brand }) {
     unit_serial_number: "",
     note: "",
     technician: "",
-    accessory_cost: 0,
+    accessory_cost: "",
   });
 
   const handleChange = (e) => {
@@ -26,7 +26,7 @@ function Form({ onClose, brand }) {
 
     setFormData({
       ...formData,
-      [name]: type === "number" ? Number(value) : value,
+      [name]: type === "number" ? (value === "" ? "" : Number(value)) : value,
     });
   };
 
@@ -47,7 +47,7 @@ function Form({ onClose, brand }) {
       order_number: "",
       product_name: "",
       color: "",
-      quantity: 0,
+      quantity: "",
       status: "Repaired",
       problem_desc: "",
       maintenance_desc: "",
@@ -55,7 +55,7 @@ function Form({ onClose, brand }) {
       unit_serial_number: "",
       note: "",
       technician: "",
-      accessory_cost: 0,
+      accessory_cost: "",
     });
 
     } catch (error) {
@@ -178,9 +178,11 @@ function Form({ onClose, brand }) {
               <input
                 type="number"
                 name="quantity"
-                value={formData.quantity}
-                onChange={handleChange}
-                required
+                    value={formData.quantity}
+                    onChange={handleChange}
+                    placeholder="Enter quantity"
+                    min="0"
+                    required
               />
             </div>
 
@@ -270,8 +272,10 @@ function Form({ onClose, brand }) {
               <input
                 type="number"
                 name="accessory_cost"
-                value={formData.accessory_cost}
-                onChange={handleChange}
+                    value={formData.accessory_cost}
+                    onChange={handleChange}
+                    placeholder="Enter accessory cost"
+                    min="0"
               />
             </div>
 

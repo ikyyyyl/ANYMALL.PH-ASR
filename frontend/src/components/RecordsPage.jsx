@@ -9,7 +9,7 @@ function RecordsModal({ onClose }) {
   useEffect(() => {
     const fetchRecords = async () => {
       try {
-        const response = await fetch("https://anymall-ph-asr-backend.onrender.com/api/records");
+        const response = await fetch("http://localhost:5000/api/records");
         if (!response.ok) throw new Error("Failed to fetch records");
         const data = await response.json();
               data.sort((a, b) => new Date(a.date_checking) - new Date(b.date_checking));
@@ -48,49 +48,50 @@ function RecordsModal({ onClose }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-        {/* <button onClick={onClose} className="modal-close">
-          ✖
-        </button> */}
-        <h2>All Service Records</h2>
+        <div className="modal-header">
+          <h2>All Service Records</h2>
+          <button onClick={onClose} className="close-x">
+            ✖
+          </button>
+        </div>
 
         {loading && <p>Loading records...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
 
         {!loading && !error && (
-          <table className="records-table">
-            <thead>
-              <tr>
-                <th>Order Number</th>
-                <th>Brand</th>
-                <th>Product Name</th>
-                <th>Current Status</th>
-                <th>Unit Serial Number</th>
-                <th>Date of Checking</th>
-              </tr>
-            </thead>
-            <tbody>
-              {records.map((record) => (
-                <tr key={record._id}>
-                  <td>{record.order_number}</td>
-                  <td>{record.brand}</td>
-                  <td>{record.product_name}</td>
-                  <td>{record.current_status}</td>
-                  <td>{record.unit_serial_number}</td>
-                  <td>{new Date(record.date_checking).toLocaleDateString()}</td>
-                </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan="6">
-                  <button type="button" className="btn-export" onClick={handleExport}>
-                    <span className="btn-text">⤓ Export</span>
-                  </button>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-          
+          <>
+            <div className="records-table-wrapper">
+              <table className="records-table">
+                <thead>
+                  <tr>
+                    <th>Order Number</th>
+                    <th>Brand</th>
+                    <th>Product Name</th>
+                    <th>Current Status</th>
+                    <th>Unit Serial Number</th>
+                    <th>Date of Checking</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {records.map((record) => (
+                    <tr key={record._id}>
+                      <td>{record.order_number}</td>
+                      <td>{record.brand}</td>
+                      <td>{record.product_name}</td>
+                      <td>{record.current_status}</td>
+                      <td>{record.unit_serial_number}</td>
+                      <td>{new Date(record.date_checking).toLocaleDateString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn-export" onClick={handleExport}>
+                <span className="btn-text">⤓ Export</span>
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
