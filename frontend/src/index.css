@@ -699,6 +699,11 @@ button:hover {
   box-sizing: border-box;
 }
 
+.form-group input datepicker {
+  padding: 8px 10px;
+  color: #000000;
+}
+
 .form-group input:focus, 
 .form-group select:focus {
   border-color: #4faffe;
@@ -706,9 +711,9 @@ button:hover {
   outline: none;
 }
 
-.form-group input::placeholder {
+/* .form-group input::placeholder {
   color: #94a3b8;
-}
+} */
 
 .form-group.brand-group input{
   display: flex;
