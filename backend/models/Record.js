@@ -42,8 +42,8 @@ const recordSchema = new mongoose.Schema({
   note: String,
   technician: String,
   accessory_cost: { 
-    type: Number, 
-    default: 0 },
+    type: Number
+  },
 });
 
 module.exports = mongoose.model("Record", recordSchema);
