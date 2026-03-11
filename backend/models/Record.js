@@ -4,7 +4,7 @@ const recordSchema = new mongoose.Schema({
 
   brand: {
     type: String,
-    enum: ["Dreame", "Wanbo", "Uwant"],
+    enum: ["DDPAI","Dreame", "Wanbo", "Uwant"],
     },
   order_date: Date,
   under_warranty: {
