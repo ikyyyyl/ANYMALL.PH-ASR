@@ -686,6 +686,11 @@ button:hover {
   display: block;
 }
 
+.form-group input {
+  padding: 8px 10px;
+  color: #000000;
+}
+
 .form-group input, 
 .form-group select {
   background: #ffffff;
