@@ -50,6 +50,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  color: black;
 }
 button:hover {
   border-color: #646cff;
@@ -559,7 +560,7 @@ button:hover {
 
 /* Modal box */
 .modal-container {
-  background: linear-gradient(135deg, #f0f7ff 0%, #e8f1ff 100%);
+  background: linear-gradient(135deg, #2a9d8f 0%, #e8f1ff 100%);
   width: 900px;
   max-width: 85vw;
   max-height: 85vh;
@@ -670,8 +671,9 @@ button:hover {
 
 .modal-container h2 {
   text-align: center;
+  align-items: center;
   margin-bottom: 20px;
-  color: #1e3a5f;
+  color: #000000;
   text-shadow: none;
   font-weight: 700;
   font-size: 1.8rem;
@@ -684,11 +686,6 @@ button:hover {
   font-size: 0.95rem;
   font-weight: 700;
   display: block;
-}
-
-.form-group input {
-  padding: 8px 10px;
-  color: #000000;
 }
 
 .form-group input, 
@@ -704,11 +701,6 @@ button:hover {
   box-sizing: border-box;
 }
 
-.form-group input datepicker {
-  padding: 8px 10px;
-  color: #000000;
-}
-
 .form-group input:focus, 
 .form-group select:focus {
   border-color: #4faffe;
@@ -716,9 +708,9 @@ button:hover {
   outline: none;
 }
 
-/* .form-group input::placeholder {
+.form-group input::placeholder {
   color: #94a3b8;
-} */
+}
 
 .form-group.brand-group input{
   display: flex;

@@ -5,11 +5,14 @@ function RecordsModal({ onClose }) {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
 
   useEffect(() => {
     const fetchRecords = async () => {
       try {
-        const response = await fetch("https://anymall-ph-asr-backend.onrender.com/api/records");
+        const response = await fetch("http://localhost:5000/api/records");
         if (!response.ok) throw new Error("Failed to fetch records");
         const data = await response.json();
               data.sort((a, b) => new Date(a.date_checking) - new Date(b.date_checking));
@@ -26,16 +29,28 @@ function RecordsModal({ onClose }) {
     fetchRecords();
   }, []);
 
-  const handleExport = async () => {
+const handleExport = async () => {
   try {
-    const response = await API.get("/records/export", {
-      responseType: "blob", // IMPORTANT for Excel download
+    let url = "/records/export";
+    const params = new URLSearchParams();
+
+    // ✅ include ALL filters
+    if (selectedBrand) params.append("brand", selectedBrand);
+    if (startDate) params.append("startDate", startDate);
+    if (endDate) params.append("endDate", endDate);
+
+    if (params.toString()) {
+      url += "?" + params.toString();
+    }
+
+    const response = await API.get(url, {
+      responseType: "blob",
     });
 
-    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const blobUrl = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "After_Sales-Record.xlsx");
+    link.href = blobUrl;
+    link.setAttribute("download", "Filtered-Records.xlsx");
     document.body.appendChild(link);
     link.click();
     link.remove();
@@ -60,6 +75,45 @@ function RecordsModal({ onClose }) {
 
         {!loading && !error && (
           <>
+            <div className="filter-section" style={{ padding: "15px", borderBottom: "1px solid #ddd", display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
+              <label style={{ fontWeight: "bold" }}>Filter by Brand:</label>
+              <select
+                value={selectedBrand}
+                onChange={(e) => setSelectedBrand(e.target.value)}
+                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+              >
+                <option value="">All Brands</option>
+                <option value="DDPAI">DDPAI</option>
+                <option value="Dreame">Dreame</option>
+                <option value="Wanbo">Wanbo</option>
+                <option value="Uwant">Uwant</option>
+              </select>
+
+              <label style={{ fontWeight: "bold" }}>Filter by Date:</label>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                placeholder="Start Date"
+                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+              />
+              <span style={{ fontWeight: "bold" }}>to</span>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                placeholder="End Date"
+                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+              />
+              {(startDate || endDate || selectedBrand) && (
+                <button
+                  onClick={() => { setStartDate(""); setEndDate(""); setSelectedBrand(""); }}
+                  style={{ padding: "8px 12px", borderRadius: "4px", border: "1px solid #999", cursor: "pointer", background: "#f0f0f0" }}
+                >
+                  Clear Filters
+                </button>
+              )}
+            </div>
             <div className="records-table-wrapper">
               <table className="records-table">
                 <thead>
@@ -73,7 +127,23 @@ function RecordsModal({ onClose }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {records.map((record) => (
+                  {records
+                    .filter((record) => !selectedBrand || record.brand === selectedBrand)
+                    .filter((record) => {
+                      if (!startDate && !endDate) return true;
+                      const recordDate = new Date(record.date_checking);
+                      const start = startDate ? new Date(startDate) : null;
+                      const end = endDate ? new Date(endDate) : null;
+                      
+                      if (start && recordDate < start) return false;
+                      if (end) {
+                        const endOfDay = new Date(end);
+                        endOfDay.setHours(23, 59, 59, 999);
+                        if (recordDate > endOfDay) return false;
+                      }
+                      return true;
+                    })
+                    .map((record) => (
                     <tr key={record._id}>
                       <td>{record.order_number}</td>
                       <td>{record.brand}</td>
@@ -88,7 +158,7 @@ function RecordsModal({ onClose }) {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn-export" onClick={handleExport}>
-                <span className="btn-text">⤓ Export</span>
+                <span className="btn-text">⤓ Export Filtered Data</span>
               </button>
             </div>
           </>

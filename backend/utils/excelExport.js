@@ -25,8 +25,30 @@ const exportToExcel = async (records) => {
   ];
 
   records.forEach((record) => {
-    worksheet.addRow(record);
+  worksheet.addRow({
+    brand: record.brand,
+    order_date: record.order_date
+      ? new Date(record.order_date).toLocaleDateString()
+      : "",
+    under_warranty: record.under_warranty,
+    date_checking: record.date_checking
+      ? new Date(record.date_checking).toLocaleDateString()
+      : "",
+    order_number: record.order_number,
+    product_name: record.product_name,
+    color: record.color,
+    quantity: record.quantity,
+    status: record.status,
+    problem_desc: record.problem_desc,
+    maintenance_desc: record.maintenance_desc,
+    parts_used: record.parts_used,
+    current_status: record.current_status,
+    unit_serial_number: record.unit_serial_number,
+    note: record.note,
+    technician: record.technician,
+    accessory_cost: record.accessory_cost,
   });
+});
 
   // Style header row (row 1)
 const headerRow = worksheet.getRow(1);
